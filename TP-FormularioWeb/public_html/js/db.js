@@ -10,7 +10,7 @@ function startDB() {
     dataBase.onupgradeneeded = function (e) {
         var active = dataBase.result;
         var object = active.createObjectStore("alumnos", {keyPath: 'id', autoIncrement: true});
-        object.createIndex('id_alumno', 'id', {unique: false});
+        // object.createIndex('id_alumno', 'id', {unique: true});
         object.createIndex('nombre_alumno', 'nombre', {unique: false});
         object.createIndex('cedula_alumno', 'cedula', {unique: true});
         object.createIndex('apellido_alumno', 'apellido', {unique: false});
@@ -47,10 +47,7 @@ function add() {
         cel: document.querySelector("#cel").value
     });
     request.onerror = function (e) {
-        $('#errorcarga').show();
-        $('#carga').hide();
         $('#cedula').focus();
-
     };
     data.oncomplete = function (e) {
         document.querySelector('#cedula').value = '';
@@ -67,6 +64,7 @@ function add() {
         $('#carga').fadeOut(3000);
         $('#cedula').focus();
         CargaDb();
+        limpiarcampos();
     };
 }
 function CargaDb() {
@@ -131,26 +129,29 @@ function recuperar(id) {
             document.querySelector('#sexo').value = result.sexo;
             document.querySelector('#tipoestudio').value = result.tipoestudio;
             document.querySelector('#cel').value = result.cel;
-           
+
             $('#registrar').attr("disabled", true);
             $('#editar').attr("disabled", false);
+
         }
     };
 }
 
 
-function modificar(id) {
-
+function modificar() {
+  
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readwrite");
-    var object = data.objectStore("alumnos");
-    var index = object.index('id_alumno');
+    var objectStore = data.objectStore("alumnos");
+    var index = objectStore.index('id_alumno');
+     
+    
 
-    index.openCursor(id).onsuccess = function (event) {
+    index.openCursor().onsuccess = function (event) {
         var cursor = event.target.result;
         if (cursor) {
             var updateData = cursor.value;
-            updateData.cedula = document.querySelector("#cedula").value;
+//            updateData.cedula = document.querySelector("#cedula").value;
             updateData.nombre = document.querySelector("#nombre").value;
             updateData.apellido = document.querySelector("#apellido").value;
             updateData.fechanaci = document.querySelector("#fechanaci").value;
@@ -161,10 +162,12 @@ function modificar(id) {
             updateData.cel = document.querySelector("#cel").value;
             var request = cursor.update(updateData);
             request.onsuccess = function () {
-                swal("Datos Modificados");
+                $("#modifi").fadeIn();
+                $("#modifi").fadeOut(3000);
                 CargaDb();
                 limpiarcampos();
-                $("#cedula").focus();
+                $('#editar').attr("disabled", true);
+                $('#registrar').attr("disabled", false);
             };
             request.onerror = function () {
                 alert('Error' + '/n/n' + request.error.name + '\n\n' + request.error.message);
@@ -180,17 +183,11 @@ function deletedate(id) {
     var data = active.transaction(["alumnos"], "readwrite");
     var object = data.objectStore("alumnos");
     var request = object.delete(id);
-
-
-
-    request.onsuccess = function () {
-
+   request.onsuccess = function () {
         swal("Dato Eliminado");
         $("#cedula").focus();
         CargaDb();
-
     };
-
 }
 
 //function delet(id) {
@@ -209,17 +206,6 @@ function deletedate(id) {
 //        object.delete(result.id);
 //    };
 //}
-
-
-function delet() {
-
-    var active = dataBase.result;
-    var data = active.transaction(["alumnos"], "readwrite");
-    var object = data.objectStore("alumnos");
-
-    var request = object.delete(parseInt(document.querySelector("#id").value));
-
-}
 
 function BusquedaciAdmi() {
     var active = dataBase.result;
@@ -243,14 +229,10 @@ function BusquedaciAdmi() {
             if (cedula === $("#cedula").val()) {
                 recuperar(elements[key].id);
             }
-
-
         }
         elements = [];
-
     };
 }
-
 
 function BusquedaCiUsuario() {
     var active = dataBase.result;
@@ -266,19 +248,16 @@ function BusquedaCiUsuario() {
         result.continue();
     };
     data.oncomplete = function () {
-
         for (var key in elements) {
-
             var cedula = elements[key].cedula;
-
             if (cedula === $("#cedula").val()) {
-              swal("El numero de Cedula ya existe en el Sistema");
-             $("#cedula").val("");
+                $("#cedula").focus();
+                $('#errorcarga').fadeIn();
+                $('#errorcarga').fadeOut(4000);
+                console.log("cedula ya existe");
+                $("#cedula").val("");
             }
-
-
         }
         elements = [];
-
     };
-}
+} 

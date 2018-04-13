@@ -68,11 +68,7 @@ and open the template in the editor.
                                 Debe cargar un Apellido!
                             </div>
                         </div>
-                        <div class="form-group col-md-2 " style="visibility: hidden" >
-                            <label class="letra" for="exampleFormControlcedula" style="font-weight: bold;">Cod Alumno</label>
-                            <input   type="text" id="id" placeholder="Cedula" maxlength="12" >
-
-                        </div>
+                       
 
                     </div>
                     <div class="form-row">
@@ -273,36 +269,21 @@ and open the template in the editor.
                         </div>
 
                 </fieldset>
-
                 <div class="form-row">
                     <!--  <button type="button" onclick="add();" class="btn btn-success col-md-2  col-sm-3 letra " >Registrar</button> -->
                     <button id="registrar"  class="btn btn-success col-md-2 col-sm-3 letra">Registrar</button>&nbsp;
                     <button id="editar" onclick="modificar()" class="btn btn-info col-md-2 col-sm-3 letra">Editar</button>&nbsp;
                     <!-- <button id="eliminar" onclick="" type="submit" class="btn btn-danger col-md-2 col-sm-3 letra">Eliminar</button>&nbsp; --> 
                 </div>
-
-
-
-
             </form>
-
-
-
-
         </div>
         <br>
         <br>
+        <div id="errorcarga" class="alert alert-warning error" style="text-align: center">Este Nº de Cedula ya existe en el Sistema </div>
+        <div id="carga" class="alert alert-success carga" style="text-align: center">Datos Cargados Satisfactoriamente</div>  
+        <div id="modifi" class="alert alert-info carga" style="text-align: center">Datos Modificados Correctamente </div>  
 
-
-      <!--  <div id="errorcarga" class="alert alert-danger error">Duplicacion de Cedula</div> -->
-        <div id="carga" class="alert alert-success carga">Datos Cargados Satisfactoriamente</div>  
-
-
-
-
-
-
-
+        <!-- PARTE DE LA BUSQUEDA DE DATOS  -->
         <div id="busquedaregistro" >
 
             <a  style="margin-left: 50px;">Escriba un Nombre, Apellido o Correo</a>
@@ -323,7 +304,6 @@ and open the template in the editor.
                             <th>Sexo</th>
                             <th>Estudio</th>
                             <th>Cel</th>
-
                         </tr>
                     </thead>
                     <tbody id="elementsList">
@@ -332,15 +312,11 @@ and open the template in the editor.
                         </tr>
                     </tbody>
                 </table>
-                
-                
-                
             </div>  
-            
-            <button id="index" onclick="location.href='index.html'" class="btn btn-light"> Atras</button>
-         
-            
+            <button id="index" onclick="location.href = 'index.html'" class="btn btn-light"> Atras</button>
         </div>
+
+        <!-- FIN DE LA PARTE DE LA BUSQUEDA DE DATOS --> 
         <br>
         <br>
         <br>

@@ -17,6 +17,7 @@ $(document).ready(function () {
     $('#nombre').css('text-transform', 'capitalize');
     $('#apellido').css('text-transform', 'capitalize');
     $('#busquedaregistro').css('display', 'none');
+    $('#modifi').css('display', 'none');
 
     $("#esconder").click(function () {
         $("#cargas").hide();
