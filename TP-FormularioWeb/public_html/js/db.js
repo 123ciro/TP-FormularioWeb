@@ -133,6 +133,8 @@ function recuperar(id) {
             
             $('#registrar').attr("disabled",true);
             $('#editar').attr("disabled", false);
+            $('#cedula').attr("disabled", true);
+            $("#nombre").focus();
 
         }
     };
@@ -146,9 +148,6 @@ function modificar(cedula) {
     var data = active.transaction(["alumnos"], "readwrite");
     var objectStore = data.objectStore("alumnos");
     var index = objectStore.index('cedula_alumno');
-     
-    
-
     index.openCursor(cedula).onsuccess = function (event) {
         var cursor = event.target.result;
         if (cursor) {

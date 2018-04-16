@@ -89,8 +89,6 @@ function ValidNum() {
                     form.classList.remove('was-validated');
                 }
 
-
-
             }, false);
         });
     }, false);
