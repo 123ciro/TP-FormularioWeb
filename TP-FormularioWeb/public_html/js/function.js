@@ -113,3 +113,8 @@ $(document).ready(function(){
       BusquedaCiUsuario();
     });
 });
+
+function eliminarDatos(id){
+    
+     deletedate($("#id").val());
+}

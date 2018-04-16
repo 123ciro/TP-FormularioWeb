@@ -131,6 +131,7 @@ function recuperar(id) {
             document.querySelector('#tipoestudio').value = result.tipoestudio;
             document.querySelector('#cel').value = result.cel;
             
+            $('#eliminar').attr("disabled",false);
             $('#registrar').attr("disabled",true);
             $('#editar').attr("disabled", false);
             $('#cedula').attr("disabled", true);
@@ -185,7 +186,7 @@ function deletedate(id) {
     var object = data.objectStore("alumnos");
     var request = object.delete(id);
    request.onsuccess = function () {
-        swal("Dato Eliminado");
+   
         $("#cedula").focus();
         CargaDb();
     };
