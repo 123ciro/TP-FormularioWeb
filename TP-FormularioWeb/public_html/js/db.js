@@ -5,12 +5,13 @@
  */
 var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 var dataBase = null;
+var recuperar;
 function startDB() {
     dataBase = indexedDB.open('Registros', 1);
     dataBase.onupgradeneeded = function (e) {
         var active = dataBase.result;
         var object = active.createObjectStore("alumnos", {keyPath: 'id', autoIncrement: true});
-        // object.createIndex('id_alumno', 'id', {unique: true});
+        object.createIndex('id_alumno', 'id', {unique: true});
         object.createIndex('nombre_alumno', 'nombre', {unique: false});
         object.createIndex('cedula_alumno', 'cedula', {unique: true});
         object.createIndex('apellido_alumno', 'apellido', {unique: false});
@@ -60,7 +61,7 @@ function add() {
         document.querySelector('#tipoestudio').value = '';
         document.querySelector('#cel').value = '';
         $('#carga').fadeIn();
-        $('#errorcarga').hide();
+     
         $('#carga').fadeOut(3000);
         $('#cedula').focus();
         CargaDb();
@@ -129,8 +130,8 @@ function recuperar(id) {
             document.querySelector('#sexo').value = result.sexo;
             document.querySelector('#tipoestudio').value = result.tipoestudio;
             document.querySelector('#cel').value = result.cel;
-
-            $('#registrar').attr("disabled", true);
+            
+            $('#registrar').attr("disabled",true);
             $('#editar').attr("disabled", false);
 
         }
@@ -138,16 +139,17 @@ function recuperar(id) {
 }
 
 
-function modificar() {
+
+function modificar(cedula) {
   
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readwrite");
     var objectStore = data.objectStore("alumnos");
-    var index = objectStore.index('id_alumno');
+    var index = objectStore.index('cedula_alumno');
      
     
 
-    index.openCursor().onsuccess = function (event) {
+    index.openCursor(cedula).onsuccess = function (event) {
         var cursor = event.target.result;
         if (cursor) {
             var updateData = cursor.value;

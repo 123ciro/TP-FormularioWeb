@@ -81,6 +81,10 @@ function ValidNum() {
                 } else {
                     event.preventDefault();
                     event.stopPropagation();
+                    if(document.getElementById("registrar").hasAttribute("disabled")){
+                        alert("disabled");
+                        modificar($("#cedula").val());
+                    }
                     add();
                     form.classList.remove('was-validated');
                 }
