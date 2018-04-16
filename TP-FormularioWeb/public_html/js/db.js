@@ -121,6 +121,8 @@ function recuperar(id) {
     request.onsuccess = function () {
         var result = request.result;
         if (result !== undefined) {
+            
+            document.querySelector('#id').value = result.id;
             document.querySelector('#cedula').value = result.cedula;
             document.querySelector('#nombre').value = result.nombre;
             document.querySelector('#apellido').value = result.apellido;
@@ -263,3 +265,14 @@ function BusquedaCiUsuario() {
         elements = [];
     };
 } 
+function deletedateId(cedula) {
+    var active = dataBase.result;
+    var data = active.transaction(["alumnos"], "readwrite");
+    var object = data.objectStore("alumnos");
+    var request = object.delete(cedula);
+   request.onsuccess = function () {
+   
+        $("#cedula").focus();
+        CargaDb();
+    };
+}

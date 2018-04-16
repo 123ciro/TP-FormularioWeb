@@ -82,9 +82,14 @@ function ValidNum() {
                     event.preventDefault();
                     event.stopPropagation();
                     if(document.getElementById("registrar").hasAttribute("disabled")){
-                        alert("disabled");
+                       
                         modificar($("#cedula").val());
+                           
+                        deletedateId($("#cedula").val());
                     }
+                   
+                    
+                    
                     add();
                     form.classList.remove('was-validated');
                 }
@@ -113,8 +118,3 @@ $(document).ready(function(){
       BusquedaCiUsuario();
     });
 });
-
-function eliminarDatos(id){
-    
-     deletedate($("#id").val());
-}
