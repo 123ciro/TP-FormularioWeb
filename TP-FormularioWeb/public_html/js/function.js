@@ -12,7 +12,8 @@ $(document).ready(function () {
     $('#errorcarga').css('display', 'none');
     $('#carga').css('display', 'none');
     $('#edit').css('display', 'none');
-    $('#fecha_actual').attr("disabled", true);
+    $('#fecha').css('display', 'none');
+
     $('#cedula').focus();
     $('#nombre').css('text-transform', 'capitalize');
     $('#apellido').css('text-transform', 'capitalize');
@@ -24,15 +25,12 @@ $(document).ready(function () {
         $("#busquedaregistro").show();
 
     });
-    
-    
-
 
 
     //para que aparezca la fecha actual
     $(document).ready(function () {
         $("#fecha_actual").datepicker({
-            dateFormat: 'MM dd,yy '
+            dateFormat: 'dd - MM - yy '
         }).datepicker("setDate", new Date());
     });
 
@@ -79,19 +77,15 @@ function ValidNum() {
                     $('#cedula').focus();
                     form.classList.add('was-validated');
                 } else {
+
                     event.preventDefault();
                     event.stopPropagation();
-                    if(document.getElementById("registrar").hasAttribute("disabled")){
-                       
-                        modificar($("#cedula").val());
-                           
-                        deletedateId($("#cedula").val());
-                    }
-                   
-                    
-                    
                     add();
                     form.classList.remove('was-validated');
+                    if (document.getElementById("registrar").hasAttribute("disabled")) {
+                        modificar($("#cedula").val());
+                    }
+
                 }
 
             }, false);
@@ -109,12 +103,13 @@ function limpiarcampos() {
     $("#correo").val("");
     $("#tipoestudio").val("");
     $("#cel").val("");
+    $("#cedula").focus();
 
 
 }
 
-$(document).ready(function(){
-  $("#cedula").focusout(function(){
-      BusquedaCiUsuario();
+$(document).ready(function () {
+    $("#cedula").focusout(function () {
+        BusquedaCiUsuario();
     });
 });

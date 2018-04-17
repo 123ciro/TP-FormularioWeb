@@ -12,6 +12,8 @@ function startDB() {
         var active = dataBase.result;
         var object = active.createObjectStore("alumnos", {keyPath: 'id', autoIncrement: true});
         object.createIndex('id_alumno', 'id', {unique: true});
+        object.createIndex('fecha_inscripcion', 'fecha_actual', {unique: false});
+
         object.createIndex('nombre_alumno', 'nombre', {unique: false});
         object.createIndex('cedula_alumno', 'cedula', {unique: true});
         object.createIndex('apellido_alumno', 'apellido', {unique: false});
@@ -33,6 +35,8 @@ function startDB() {
 }
 
 function add() {
+   
+   
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readwrite");
     var object = data.objectStore("alumnos");
@@ -45,7 +49,8 @@ function add() {
         correo: document.querySelector("#correo").value,
         sexo: document.querySelector("#sexo").value,
         tipoestudio: document.querySelector("#tipoestudio").value,
-        cel: document.querySelector("#cel").value
+        cel: document.querySelector("#cel").value,
+        fecha_actual: document.querySelector("#fecha_actual").value
     });
     request.onerror = function (e) {
         $('#cedula').focus();
@@ -60,8 +65,9 @@ function add() {
         document.querySelector('#sexo').value = '';
         document.querySelector('#tipoestudio').value = '';
         document.querySelector('#cel').value = '';
+        document.querySelector('#fecha_actual').value = '';
         $('#carga').fadeIn();
-     
+
         $('#carga').fadeOut(3000);
         $('#cedula').focus();
         CargaDb();
@@ -87,12 +93,11 @@ function CargaDb() {
             outerHTML += '\n\
                         <tr>\n\
                             <td>' + elements[key].id + '</td>\n\
+                            <td>' + elements[key].fecha_actual + '</td>\n\
                             <td>' + elements[key].cedula + '</td>\n\
                             <td>' + elements[key].nombre + '</td>\n\
                             <td>' + elements[key].apellido + '</td>\n\
-                            <td>' + elements[key].fechanaci + '</td>\n\
                             <td>' + elements[key].edad + '</td>\n\
-                            <td>' + elements[key].correo + '</td>\n\
                             <td>' + elements[key].sexo + '</td>\n\
                             <td>' + elements[key].tipoestudio + '</td>\n\
                             <td>' + elements[key].cel + '</td> \n\
@@ -121,7 +126,7 @@ function recuperar(id) {
     request.onsuccess = function () {
         var result = request.result;
         if (result !== undefined) {
-            
+
             document.querySelector('#id').value = result.id;
             document.querySelector('#cedula').value = result.cedula;
             document.querySelector('#nombre').value = result.nombre;
@@ -132,9 +137,9 @@ function recuperar(id) {
             document.querySelector('#sexo').value = result.sexo;
             document.querySelector('#tipoestudio').value = result.tipoestudio;
             document.querySelector('#cel').value = result.cel;
-            
-            $('#eliminar').attr("disabled",false);
-            $('#registrar').attr("disabled",true);
+
+            $('#eliminar').attr("disabled", false);
+            $('#registrar').attr("disabled", true);
             $('#editar').attr("disabled", false);
             $('#cedula').attr("disabled", true);
             $("#nombre").focus();
@@ -146,7 +151,7 @@ function recuperar(id) {
 
 
 function modificar(cedula) {
-  
+
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readwrite");
     var objectStore = data.objectStore("alumnos");
@@ -155,7 +160,7 @@ function modificar(cedula) {
         var cursor = event.target.result;
         if (cursor) {
             var updateData = cursor.value;
-//            updateData.cedula = document.querySelector("#cedula").value;
+            updateData.cedula = document.querySelector("#cedula").value;
             updateData.nombre = document.querySelector("#nombre").value;
             updateData.apellido = document.querySelector("#apellido").value;
             updateData.fechanaci = document.querySelector("#fechanaci").value;
@@ -168,13 +173,11 @@ function modificar(cedula) {
             request.onsuccess = function () {
                 $("#modifi").fadeIn();
                 $("#modifi").fadeOut(3000);
-                CargaDb();
-                limpiarcampos();
-                $("#cedula").focus();
                 $('#registrar').attr("disabled", false);
                 $('#cedula').attr("disabled", false);
-                $('#editar').attr("disabled", true);
-                $('#registrar').attr("disabled", false);
+                CargaDb();
+                limpiarcampos();
+
             };
             request.onerror = function () {
                 alert('Error' + '/n/n' + request.error.name + '\n\n' + request.error.message);
@@ -190,8 +193,8 @@ function deletedate(id) {
     var data = active.transaction(["alumnos"], "readwrite");
     var object = data.objectStore("alumnos");
     var request = object.delete(id);
-   request.onsuccess = function () {
-   
+    request.onsuccess = function () {
+
         $("#cedula").focus();
         CargaDb();
     };
@@ -267,14 +270,14 @@ function BusquedaCiUsuario() {
         }
         elements = [];
     };
-} 
+}
 function deletedateId(cedula) {
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readwrite");
     var object = data.objectStore("alumnos");
     var request = object.delete(cedula);
-   request.onsuccess = function () {
-   
+    request.onsuccess = function () {
+
         $("#cedula").focus();
         CargaDb();
     };
