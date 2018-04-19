@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>CARGA DE DATOS</title>
+        <title>Carga de Datos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -48,9 +48,10 @@ and open the template in the editor.
 
                         <div class="form-group col-md-2 " >
                             <label class="letra" for="exampleFormControlcedula" style="font-weight: bold;">Cedula</label>
-                            <input   type="text" onkeyup="format(this) "  class="form-control form-control-sm letra letra " id="cedula" placeholder="Cedula" maxlength="12" required >
-                            <div class="invalid-tooltip letra " >
-                                Debe cargar una Cedula!
+                            <input   type="number" min="100000" max="9999999"  class="form-control form-control-sm letra letra " id="cedula" placeholder="Cedula"   required >
+                            <div class="invalid-tooltip letra " style="width: 100%">
+                                <p> -Debe cargar una Cedula! </p>
+                                <p>  -El Nº de Cedula debe Ser mayor a 100000 pero menor a 9999999. </p>
                             </div>
                         </div>
                         <!-- Campo Nombre -->
@@ -81,25 +82,28 @@ and open the template in the editor.
                         <!-- Campo Fecha de Nacimiento -->
                         <div class="form-group col-md-2 ">
                             <label class="letra" for="exampleFormControlfechanacimiento" style="font-weight: bold">Nacimiento</label>
-                            <input type="date" class="form-control form-control-sm letra " id="fechanaci" required >
-                            <div class="invalid-tooltip letra">
-                                Debe cargar la Fecha de Nacimiento!
+                            <input type="date" class="form-control form-control-sm letra " min="1990-01-01"  id="fechanaci" required >
+                            <div class="invalid-tooltip letra" style="width: 100%">
+                                <p>  -Debe cargar la Fecha de Nacimiento!  </p>
+                                <p> -Fecha de Naciminto tiene que ser mayor a 1990-01-01.</p>
                             </div>
                         </div>
                         <!-- Campo Edad -->
                         <div class="form-group col-md-1 ">
                             <label class="letra"  for="exampleFormControledad" style="font-weight: bold">Edad</label>
-                            <input type="number" class="form-control form-control-sm letra "  id="edad" placeholder="Edad" required >
-                            <div class="invalid-tooltip letra">
-                                Debe cargar la Edad!
+                            <input type="number" class="form-control form-control-sm letra " min="18"  id="edad" placeholder="Edad" required >
+                            <div class="invalid-tooltip letra" style="width: 100%">
+                                <p>Debe cargar la Edad!</p>
+                                <p>Debe ser mayor de Edad</p>
                             </div>
                         </div>
                         <!-- Campo Correo Electronico -->
                         <div class="form-group col-md-3  ">
                             <label class="letra"  for="validationDefaultUsername" style="font-weight: bold">Correo Electronico</label>
-                            <input type="text" class="form-control form-control-sm letra "  id="correo" placeholder="Correo" autocomplete="on" required  >
+                            <input type="email" class="form-control form-control-sm letra "  id="correo" placeholder="Correo" autocomplete="on" required  >
                             <div class="invalid-tooltip letra">
-                                Debe introducir el correo!
+                                <p> Debe introducir el correo! </p>
+                                <p> Ingrese un Correo Valido </p>
                             </div>
                         </div> 
                     </div>
@@ -119,7 +123,7 @@ and open the template in the editor.
                         <!-- Campo Tipo de Estudio-->
                         <div class="form-group col-md-2 " >
                             <label class="letra"  for="exampleFormControltipoestudio" style="font-weight: bold;">Tipo de Estudio</label>
-                                <select class="form-control form-control-sm letra  "  id="tipoestudio"  required  >
+                            <select class="form-control form-control-sm letra  "  id="tipoestudio"  required  >
                                 <option> </option>
                                 <option>Tecnico</option>
                                 <option>Modular</option>
@@ -296,18 +300,15 @@ and open the template in the editor.
             <input style="margin-left: 10px;" id="myInput" type="text" placeholder="Busqueda" >
             <br>
             <hr>
-            <div class="container" id="elements" >
+            <div class="container col-md-12 " id="elements" >
                 <table>
                     <thead>
                         <tr>
-
-
                             <th>Cod</th>
                             <th>Fecha Inscripcion</th>
                             <th>Cedula</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>Edad</th>
                             <th>Sexo</th>
                             <th>Estudio</th>
                             <th>Cel</th>

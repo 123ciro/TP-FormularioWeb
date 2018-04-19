@@ -6,6 +6,9 @@
 var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 var dataBase = null;
 var recuperar;
+
+//En esta Funcion le ponemos el nombre a la base de datos y a la tabla con sus respectivos datos.
+
 function startDB() {
     dataBase = indexedDB.open('Registros', 1);
     dataBase.onupgradeneeded = function (e) {
@@ -30,10 +33,10 @@ function startDB() {
         CargaDb();
     };
     dataBase.onerror = function (e) {
-        alert('Error loading database');
+       // alert('Error loading database');
     };
 }
-
+//Funcion para Agregar datos 
 function add() {
    
    
@@ -74,6 +77,7 @@ function add() {
         limpiarcampos();
     };
 }
+//Refresca la Base de Datos.
 function CargaDb() {
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readonly");
@@ -97,7 +101,6 @@ function CargaDb() {
                             <td>' + elements[key].cedula + '</td>\n\
                             <td>' + elements[key].nombre + '</td>\n\
                             <td>' + elements[key].apellido + '</td>\n\
-                            <td>' + elements[key].edad + '</td>\n\
                             <td>' + elements[key].sexo + '</td>\n\
                             <td>' + elements[key].tipoestudio + '</td>\n\
                             <td>' + elements[key].cel + '</td> \n\
@@ -109,9 +112,7 @@ function CargaDb() {
         document.querySelector("#elementsList").innerHTML = outerHTML;
     };
 }
-// Este codigo es para el modeal
-//<td>\n\<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Remove</button>\n\
-
+//Recupera todos los datos y cargo en los input y select.
 function recuperar(id) {
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readonly");
@@ -149,7 +150,7 @@ function recuperar(id) {
 }
 
 
-
+//Funcion que modifica los datos.
 function modificar(cedula) {
 
     var active = dataBase.result;
@@ -200,23 +201,9 @@ function deletedate(id) {
     };
 }
 
-//function delet(id) {
-//
-//    var active = dataBase.result;
-//    var data = active.transaction(["alumnos"], "readwrite");
-//    var object = data.objectStore("alumnos");
-//
-//    // primero buscamos el registro a partir del ci
-//    var index = object.index("id_alumno");
-//    var request = index.get(document.querySelector("#id").value);
-//
-//    // cuando se encuentre el registro, lo borramos
-//    request.onsuccess = function () {
-//        var result = request.result;
-//        object.delete(result.id);
-//    };
-//}
 
+//Esta Funcion una vez cargado la cedula si ya existe trae todos los datos,
+//y si no existe no realiza nada.
 function BusquedaciAdmi() {
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readonly");
@@ -244,6 +231,8 @@ function BusquedaciAdmi() {
     };
 }
 
+
+//Esta funcion le envia un mensaje al Usuario diciendo que la cedula que el esta cargando ya existe en el Sistema.
 function BusquedaCiUsuario() {
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readonly");
@@ -271,6 +260,7 @@ function BusquedaCiUsuario() {
         elements = [];
     };
 }
+//Funcion que elimina los datos de la Base de Datos.
 function deletedateId(cedula) {
     var active = dataBase.result;
     var data = active.transaction(["alumnos"], "readwrite");

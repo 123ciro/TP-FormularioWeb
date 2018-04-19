@@ -6,20 +6,17 @@
 
 
 $(document).ready(function () {
-
     $('#editar').attr("disabled", true);
     $('#eliminar').attr("disabled", true);
     $('#errorcarga').css('display', 'none');
     $('#carga').css('display', 'none');
     $('#edit').css('display', 'none');
     $('#fecha').css('display', 'none');
-
     $('#cedula').focus();
     $('#nombre').css('text-transform', 'capitalize');
     $('#apellido').css('text-transform', 'capitalize');
     $('#busquedaregistro').css('display', 'none');
     $('#modifi').css('display', 'none');
-
     $("#esconder").click(function () {
         $("#cargas").hide();
         $("#busquedaregistro").show();
@@ -34,7 +31,7 @@ $(document).ready(function () {
         }).datepicker("setDate", new Date());
     });
 
-
+//Filtrado de Datos.
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
         $("#elementsList tr").filter(function () {
@@ -42,9 +39,9 @@ $(document).ready(function () {
         });
     });
 
-
-
 });
+
+//Da formato al Nnumero de Cedula.
 function format(input)
 {
     var num = input.value.replace(/\./g, '');
@@ -62,7 +59,7 @@ function ValidNum() {
         event.returnValue = false;
     }
 }
-//FUNCION PARA VALIDAR LOS CAMPOS
+//FUNCION PARA VALIDAR LOS CAMPOS CON EL FRAMEMWORK.
 (function validarcampos1() {
 
     window.addEventListener('load', function () {
@@ -77,7 +74,6 @@ function ValidNum() {
                     $('#cedula').focus();
                     form.classList.add('was-validated');
                 } else {
-
                     event.preventDefault();
                     event.stopPropagation();
                     add();
@@ -85,14 +81,13 @@ function ValidNum() {
                     if (document.getElementById("registrar").hasAttribute("disabled")) {
                         modificar($("#cedula").val());
                     }
-
                 }
-
             }, false);
         });
     }, false);
 })();
 
+//Limpia los campos una vez realizado alguna carga, modificacion o eliminacion.
 function limpiarcampos() {
     $("#cedula").val("");
     $("#nombre").val("");
@@ -104,10 +99,8 @@ function limpiarcampos() {
     $("#tipoestudio").val("");
     $("#cel").val("");
     $("#cedula").focus();
-
-
 }
-
+// Cuando se quita el cursos del input cedula, verifica si existe o no.
 $(document).ready(function () {
     $("#cedula").focusout(function () {
         BusquedaCiUsuario();
